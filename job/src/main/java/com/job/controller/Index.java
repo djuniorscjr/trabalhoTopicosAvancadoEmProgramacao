@@ -5,7 +5,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -14,6 +14,14 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 
+
+
+
+
+
+
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 import org.drools.RuleBase;
 import org.drools.RuleBaseFactory;
 import org.drools.WorkingMemory;
@@ -22,35 +30,55 @@ import org.drools.compiler.PackageBuilder;
 import org.drools.rule.Package;
 
 
+
+
+
+
+
+
 import com.job.model.Ambiente;
 
 
 @Path("/msg")
-@RequestScoped
+@ViewScoped
 @ManagedBean
 public class Index {
 	
-	@Path("/{qntDePessoas}/{lampada}/{arCondicionado}/{distancia}")
+	private Ambiente am;
+	
+	public Index(){
+		am = new Ambiente();
+	}
+	
+	@Path("{qntDePessoas}/{distancia}")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response exec(@PathParam("qntDePessoas") int qntDePessoas,
-			@PathParam("lampada") boolean lampada,
-			@PathParam("arCondicionado") boolean arCondicionado,
 			@PathParam("distancia") float distancia) throws Exception{
 		WorkingMemory wm = (WorkingMemory) readRuleBase("rule.drl").newStatefulSession();
-        
-        Ambiente am = new Ambiente();
+         
+      
         am.setQntPessoas(qntDePessoas);
-        am.setLampada(lampada);
-        am.setArCondicionado(arCondicionado);
         am.setDistancia(distancia);
         
         wm.insert(am);
 
         wm.fireAllRules();
         
+        JSONObject obj = new JSONObject();
+        JSONObject ambiente = new JSONObject();
+        try {
+			obj.put("qntPessoas", am.getQntPessoas());
+			obj.put("distancia", am.getDistancia());
+			obj.put("lampada", am.isLampada());
+			obj.put("ar-condicionado", am.isArCondicionado());
+			
+			ambiente.put("ambiente", obj);
+		} catch (JSONException e) {
+			e.getMessage();
+		}
         
-        return Response.status(200).entity("Alteracao feita com sucesso!").build();
+        return Response.status(200).entity(ambiente).build();
 	}
 	
 	public RuleBase readRuleBase(String sourceDRL) throws DroolsParserException, IOException{
@@ -61,6 +89,18 @@ public class Index {
 		RuleBase ruleBase = RuleBaseFactory.newRuleBase();
 		ruleBase.addPackage(pkg);
 		return ruleBase;
+	}
+
+	public Ambiente getAm() {
+		return am;
+	}
+
+	public void setAm(Ambiente am) {
+		this.am = am;
+	}
+	
+	public void ae(){
+		
 	}
 	
 }

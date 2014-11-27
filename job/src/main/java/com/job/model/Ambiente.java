@@ -4,12 +4,15 @@ import java.io.Serializable;
 
 public class Ambiente implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
+	
 	private int qntPessoas;
 	private boolean lampada;
 	private boolean arCondicionado;
 	private float potenciaLampada;
 	private float potenciaArCondicionado;
 	private float distancia;
+	private String observacao;
 	
 	
 	public boolean isLampada() {
@@ -48,7 +51,10 @@ public class Ambiente implements Serializable {
 	public void setDistancia(float distancia) {
 		this.distancia = distancia;
 	}
-	
-	
-	
+	public String getObservacao() {
+		return observacao;
+	}
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
+	}
 }

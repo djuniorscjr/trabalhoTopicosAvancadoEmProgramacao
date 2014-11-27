@@ -10,9 +10,10 @@ when
 a : Ambiente (qntPessoas > 3)
 then
 
-TimeUnit.MINUTES.sleep(10);
+TimeUnit.SECONDS.sleep(10);
 System.out.println("Ambiente quantidade de Pessoas:" + a.getQntPessoas() + " Ar-Condicionado é ligado");
-
+a.setObservacao("Ambiente quantidade de Pessoas:" + a.getQntPessoas() + " Ar-Condicionado é ligado");
+a.setArCondicionado(true);
 end;
 
 rule "Acender Lampada"
@@ -23,6 +24,8 @@ then
 TimeUnit.SECONDS.sleep(4);
 a.setPotenciaLampada(100);
 System.out.println("Ambiente quantidade de Pessoas:" + a.getQntPessoas() + " potência da Lampada:" + a.getPotenciaLampada()+"%");
+a.setObservacao("Ambiente quantidade de Pessoas:" + a.getQntPessoas() + " potência da Lampada:" + a.getPotenciaLampada()+"%");
+a.setLampada(true);
 end;
 
 rule "Desligar Lampada"	
@@ -32,6 +35,8 @@ a : Ambiente (qntPessoas == 0)
 then
 a.setPotenciaLampada(0);
 System.out.println("Ambiente quantidade de Pessoas:" + a.getQntPessoas() + " potência da Lampada:" + a.getPotenciaLampada()+"%");
+a.setObservacao("Ambiente quantidade de Pessoas:" + a.getQntPessoas() + " potência da Lampada:" + a.getPotenciaLampada()+"%");
+a.setLampada(false);
 end;
 
 rule "Acender Lampada de acordo com a distancia"	
@@ -43,13 +48,18 @@ then
 TimeUnit.SECONDS.sleep(2);
 a.setPotenciaLampada(25);
 System.out.println("Ambiente quantidade de Pessoas:" + a.getQntPessoas() + " potência da Lampada:" + a.getPotenciaLampada()+"%");
+a.setObservacao("Ambiente quantidade de Pessoas:" + a.getQntPessoas() + " potência da Lampada:" + a.getPotenciaLampada()+"%");
 TimeUnit.SECONDS.sleep(1);
 a.setPotenciaLampada(50);
 System.out.println("Ambiente quantidade de Pessoas:" + a.getQntPessoas() + " potência da Lampada:" + a.getPotenciaLampada()+"%");
+a.setObservacao("Ambiente quantidade de Pessoas:" + a.getQntPessoas() + " potência da Lampada:" + a.getPotenciaLampada()+"%");
 TimeUnit.SECONDS.sleep(1);
 a.setPotenciaLampada(75);
 System.out.println("Ambiente quantidade de Pessoas:" + a.getQntPessoas() + " potência da Lampada:" + a.getPotenciaLampada()+"%");
+a.setObservacao("Ambiente quantidade de Pessoas:" + a.getQntPessoas() + " potência da Lampada:" + a.getPotenciaLampada()+"%");
 TimeUnit.SECONDS.sleep(1);
 a.setPotenciaLampada(100);
 System.out.println("Ambiente quantidade de Pessoas:" + a.getQntPessoas() + " potência da Lampada:" + a.getPotenciaLampada()+"%");
+a.setObservacao("Ambiente quantidade de Pessoas:" + a.getQntPessoas() + " potência da Lampada:" + a.getPotenciaLampada()+"%");
+a.setLampada(true);
 end;
